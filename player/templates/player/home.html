@@ -5,7 +5,12 @@
 </head>
 
 <body>
-<h1>Welcome ! There are currently {{ ngames }} games in the database</h1>
+<h1>Welcome {{ user.username }}!</h1>
+<ul>
+    {% for g in games %}
+        <li>Game {{ g.id }}: {{ g.first_player }} vs {{ g.second_player }}</li>
+    {% endfor %}
+</ul>
  </body>
 
 </html>
