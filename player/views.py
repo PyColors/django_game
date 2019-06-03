@@ -4,22 +4,13 @@ from gameplay.models import Game
 
 
 def home(request):
-    games_first_player = Game.objects.filter(
-        first_player=request.user,
-        status='F'
-    )
-    games_second_player = Game.objects.filter(
-        first_player=request.user,
-        status='S'
-    )
-    # Combine in one variable
-    # converting each QuerySet into a list adding those togetherr
+    # `Game.objects`: customer manager Class,
+    # Allow calling `game_for_user` on it and pass currently logged-in user
 
-    all_my_games = list(games_first_player) + \
-                   list(games_second_player)
+    my_games = Game.objects.game_for_user(request.user)
+    # Selecting only game that are not finished yet
+    active_games = my_games.active()
 
-    # Pass new list of all players' games to the template
     return render(request, "player/home.html",
-        {'games': all_my_games })
-
+                    {'games': active_games})
 

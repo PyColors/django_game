@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 from django.contrib.auth.models import User
 
 
@@ -11,6 +12,24 @@ GAME_STATUS_CHOICES = (
     ('L', 'Second Player Wins'),
     ('D', 'Draw'),
 )
+#
+# QuerySet: collection from the database and use think like:
+# filter and exclude
+class GameQuerySet(models.QuerySet):
+
+    # Method to call all game of user that only return game for specific user
+    def game_for_user(self, user):
+        return self.filter(
+            # `Q` is a function can use to construct queries with a logical OR in them.
+            Q(first_player=user) | Q(second_player=user)
+        )
+
+    # Selecting game depending on the status
+    def active(self):
+        return self.filter(
+            Q(status='F') | Q(status='S')
+        )
+
 
 class Game(models.Model):
     first_player = models.ForeignKey(User,
@@ -25,6 +44,8 @@ class Game(models.Model):
     # GAME_STATUS_CHOICES is an option for the field
     status = models.CharField(max_length=1, default='F',
                               choices=GAME_STATUS_CHOICES)
+
+    objects = GameQuerySet.as_manager()
 
     # Display the object to a user-friendly way with `format` rather than `Game object (3)` in the Admin
     def __str__(self):
