@@ -1,9 +1,10 @@
 """
 This file content a view
-He is a function call welcome allow users to see "Hello world"
+Import render function and render welcome HTML
 """
 
-from django.http import HttpResponse
+from django.shortcuts import render
+
 
 def welcome(request):
-    return HttpResponse("hello world")
+    return render(request, 'tictactoe/welcome.html')

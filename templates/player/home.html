@@ -1,0 +1,19 @@
+{% extends "../base.html" %}
+
+{% block title %}
+Player
+{%  endblock %}
+
+{% block content %}
+    <header>
+        <h1>Welcome {{ user.username }}!</h1>
+    </header>
+
+     <section>
+        <ul>
+            {% for g in games %}
+                <li>Game {{ g.id }}: {{ g.first_player }} vs {{ g.second_player }}</li>
+            {% endfor %}
+        </ul>
+     </section>
+{% endblock %}

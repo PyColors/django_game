@@ -54,9 +54,11 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'tictactoe.urls'
 
 TEMPLATES = [
-    {
+    {   # BACKEND: Default Django template engine,
+        # DIRS: extra templates
+        # New top level folder inside DIRS: -> os.path...
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -120,3 +122,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# New variable static files DIRS
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static")
+]
