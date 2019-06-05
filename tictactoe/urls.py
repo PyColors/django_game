@@ -17,10 +17,23 @@ from django.contrib import admin
 from player import views
 from django.urls import path
 
+from django.contrib.auth.views import LoginView, LogoutView
+
 from .views import welcome
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('player/', views.home, name='home'),
-    path('', welcome)
+    path('player/home', views.home, name='player_home'),
+    path('', welcome, name="tictactoe_welcome"),
+
+    # As LogoutView is a Class no a function
+    # we need to call `as_view` on it ton convert it to a function
+    path('player/login',
+        LoginView.as_view(template_name="player/login_form.html"),
+        name="player_login"),
+
+
+    path(r'logout',
+        LogoutView.as_view(),
+        name="player_logout"),
 ]

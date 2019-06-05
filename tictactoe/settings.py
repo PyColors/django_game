@@ -127,3 +127,13 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
+
+# New setting for Djongo `LoginView` (Default URL: `/accounts/profile/`)
+# he will redirect to `player_home` after users successfully logging in.
+LOGIN_REDIRECT_URL="player_home"
+
+# New setting for logout: welcome page
+LOGOUT_REDIRECT_URL="tictactoe_welcome"
+
+# New setting for login
+LOGIN_URL="player_login"
