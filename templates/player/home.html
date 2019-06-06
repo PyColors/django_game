@@ -15,11 +15,33 @@ Player
                 <li>Game {{ g.id }}: {{ g.first_player }} vs {{ g.second_player }}</li>
             {% endfor %}
         </ul>
+
+        <p>Click bellow to invite someone to play with you</p>
+        <p><a href="{% url 'player_new_invitation' %}">Start a game</a> </p>
      </section>
 
+{#    <section>#}
+{#        <a href="{% url 'player_new_invitation' %}">#}
+{#            Invite another user to play a game 🙂#}
+{#        </a>#}
+{#    </section>#}
+
+
     <footer>
-        <a href="{% url 'player_new_invitation' %}">
-            Invite another user to play a game 🙂
-        </a>
+    <h3>Invitations</h3>
+
+        {% if invitations %}
+            <div>
+                {% for inv in invitations %}
+                    <a href="{% url 'player_accept_invitation' id=inv.id %}">
+                        {{ inv.form_user.username }} has invited you to a game! Click here.
+                    </a>
+                {% endfor %}
+            </div>
+
+        {% else %}
+            <p>You have no invitations yet.</p>
+        {% endif %}
     </footer>
+
 {% endblock %}
