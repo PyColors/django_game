@@ -11,6 +11,8 @@ New invitaion
 
         {{ form }}
 
+        {% csrf_token %}
+
         {# submit button does not been added by Django#}
         <button type="submit">Sent the invitation</button>
     </form>
