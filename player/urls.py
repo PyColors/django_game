@@ -7,3 +7,4 @@ from .views import home
 # List of all views
 urlPatterns = [
     url(r'home$', home, name="player_home")
+]

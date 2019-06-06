@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 
+from .forms import InvitationForm
 from gameplay.models import Game
 
 
@@ -17,3 +18,9 @@ def home(request):
     return render(request, "player/home.html",
                     {'games': active_games})
 
+
+@login_required
+def new_invitation(request):
+    # New instance of InvitationForm Class (HTML fo invitation)
+    form = InvitationForm()
+    return render(request, "player/new_invitation_form.html", {'form': form})

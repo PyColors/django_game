@@ -1,0 +1,17 @@
+{%  extends 'base.html' %}
+
+{% block title %}
+New invitaion
+{% endblock %}
+
+
+{% block content %}
+    {# Has to be post for invitation #}
+    <form method="post" action="{% url 'player_new_invitation' %}">
+
+        {{ form }}
+
+        {# submit button does not been added by Django#}
+        <button type="submit">Sent the invitation</button>
+    </form>
+{% endblock %}
