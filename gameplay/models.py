@@ -2,6 +2,8 @@ from django.db import models
 from django.db.models import Q
 from django.contrib.auth.models import User
 
+from django.urls import reverse
+
 
 # Set all possibilities value for the status of the game
 # with a description string for each value (drop-down)
@@ -46,6 +48,11 @@ class Game(models.Model):
                               choices=GAME_STATUS_CHOICES)
 
     objects = GameQuerySet.as_manager()
+
+    # What is the canonical URL for a model instance
+    def get_absolute_url(self):
+        return reverse('gameplay_detail', args=[self.id])
+
 
     # Display the object to a user-friendly way with `format` rather than `Game object (3)` in the Admin
     def __str__(self):

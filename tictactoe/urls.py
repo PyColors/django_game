@@ -17,7 +17,7 @@ from django.contrib import admin
 # Import player views
 from player import views
 
-from django.urls import path
+from django.urls import path, include
 
 from django.contrib.auth.views import LoginView, LogoutView
 
@@ -42,7 +42,9 @@ urlpatterns = [
 
     path('player/new_invitation', views.new_invitation, name="player_new_invitation"),
 
-    path('player/accept_invitation/<int:id>',
+    path('player/accept_invitation/(?P<id>\d+)/$',
             views.accept_invitation,
-            name="player_accept_invitation")
+            name="player_accept_invitation"),
+
+    path('games/', include('gameplay.urls'))
 ]

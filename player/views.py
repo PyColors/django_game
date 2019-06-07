@@ -66,7 +66,7 @@ def accept_invitation(request, id):
             )
             # If invitation not accepted
             invitation.delete()
-            return redirect('player_home')
+            return redirect(game)
         else:
             return render(request,
                           "player/accept_invitation_form.html",

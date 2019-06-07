@@ -10,19 +10,24 @@ Player
     </header>
 
      <section>
-        <ul>
+     <h3>Active game</h3>
+        <div>
             {% for g in games %}
-                <li>Game {{ g.id }}: {{ g.first_player }} vs {{ g.second_player }}</li>
+                <li>
+                    <a href="{{ g.get_absolute_url }}">
+                        {{ g.first_player }} vs {{ g.second_player }}
+                    </a>
+                </li>
             {% endfor %}
-        </ul>
+        </div>
 
         <p>Click bellow to invite someone to play with you</p>
-        <p><a href="{% url 'player_new_invitation' %}">Start a game</a> </p>
+        <p><a href="{% url 'player_new_invitation' %}">Start a game 🙂</a> </p>
      </section>
 
 {#    <section>#}
 {#        <a href="{% url 'player_new_invitation' %}">#}
-{#            Invite another user to play a game 🙂#}
+{#            Invite another user to play a game #}
 {#        </a>#}
 {#    </section>#}
 
