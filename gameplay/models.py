@@ -3,6 +3,7 @@ from django.db.models import Q
 from django.contrib.auth.models import User
 
 from django.urls import reverse
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 # Set all possibilities value for the status of the game
@@ -49,6 +50,29 @@ class Game(models.Model):
 
     objects = GameQuerySet.as_manager()
 
+
+    def board(self):
+        # Return two dimensional list of Move Object
+        board = [[None for x in range(BOARD_SIZE)] for y in range(BOARD_SIZE)]
+        for move in self.move_set.all():
+            board[move.y][move.x] = move
+            return board
+
+    # Return true if that player's move in the game
+    def is_user_move(self, user):
+        return (user == self.first_player and self.status == 'F') or\
+               (user == self.second_player and self.status == 'S')
+
+    # Return new player move object
+    def new_move(self):
+        if self.status not in 'FS':
+            raise ValueError("Cannot make move on finished game")
+
+        return Move(
+            game=self,
+            by_first_player=self.status == 'F'
+        )
+
     # What is the canonical URL for a model instance
     def get_absolute_url(self):
         return reverse('gameplay_detail', args=[self.id])
@@ -63,9 +87,16 @@ class Game(models.Model):
 
 # Model will represent a table in the database
 class Move(models.Model):
-    x = models.IntegerField()
-    y = models.IntegerField()
-    comment = models.CharField(max_length=300, blank=True)
-    by_first_player = models.BooleanField()
+    x = models.IntegerField(
+        validators=[MinValueValidator(0),
+                    MaxValueValidator(BOARD_SIZE-1)]
+    )
 
+    y = models.IntegerField(
+        validators=[MinValueValidator(0),
+                    MaxValueValidator(BOARD_SIZE - 1)]
+    )
+
+    comment = models.CharField(max_length=300, blank=True)
+    by_first_player = models.BooleanField(editable=False)
     game = models.ForeignKey(Game, on_delete=models.CASCADE)

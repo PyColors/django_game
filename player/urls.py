@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
 from django.contrib.auth.views import LoginView, LogoutView
-from .views import home
+from .views import home, accept_invitation
 
 
 # List of all views

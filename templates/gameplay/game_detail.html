@@ -8,4 +8,34 @@
 
 {% block content %}
     This is the detail page for game {{ game.id }}
+
+    {% for row in game.board %}
+        {% for move in row %}
+            {% if move %}
+                {% if move.by_first_player %}
+                    X
+                {% else %}
+                    O
+                {% endif %}
+            {%  endif %}
+        {% endfor %}
+    {% endfor %}
+
+
+    {% if form %}
+        <section>
+            <h3>It's your move</h3>
+            <form method="post"
+                  action="{% url 'gameplay_make_move' game.id %}">
+
+                {{ form }}
+
+                {% csrf_token %}
+
+                <button type="submit">Make a move</button>
+
+            </form>
+        </section>
+    {% endif %}
+
 {% endblock %}
